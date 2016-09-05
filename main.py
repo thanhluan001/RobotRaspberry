@@ -14,8 +14,8 @@ stdscr.keypad(True)
 curses.halfdelay(1)
 
 #setting camera
-p = Process(target=camera.run) 
-p.start()
+#p = Process(target=camera.run) 
+#p.start()
 
 #set up motor
 motor = Motor()
@@ -30,6 +30,7 @@ delay = 0
 num_try = 3
 while key != ord('q'):
   key = stdscr.getch()
+  print(key)
   if key == curses.KEY_UP or key == ord('w'):
     motor.Forwards()
     delay = 0
@@ -56,7 +57,7 @@ curses.echo()
 curses.endwin()
 
 #shut down camera
-p.terminate()
+#p.terminate()
 
 motor.CleanUp()
 del motor
