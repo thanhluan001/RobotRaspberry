@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO # Import the GPIO Library
+from math import floor
 
 class Motor:
 
@@ -16,8 +17,8 @@ class Motor:
         # How many times to turn the pin on and off each second
         self.Frequency = 20
         # How long the pin stays on each cycle, as a percent
-        self.DutyCycleA = 41
-        self.DutyCycleB = 40
+        self.DutyCycleA = 81
+        self.DutyCycleB = 85
         # Setting the duty cycle to 0 means the motors will not turn
         self.Stop = 0
 
@@ -74,5 +75,22 @@ class Motor:
         self.pwmMotorBForwards.ChangeDutyCycle(self.Stop)
         self.pwmMotorBBackwards.ChangeDutyCycle(self.DutyCycleB)
 
+    def ForwardRandom(self, x, y):
+
+        wheel1 = 1.0
+        wheel2 = floor((y)*10) / 10 
+
+        print(wheel2)
+        if (x < 0):   # Turning right
+            self.pwmMotorAForwards.ChangeDutyCycle(self.DutyCycleA * wheel1)
+            self.pwmMotorABackwards.ChangeDutyCycle(self.Stop)
+            self.pwmMotorBForwards.ChangeDutyCycle(self.DutyCycleB * wheel2)
+            self.pwmMotorBBackwards.ChangeDutyCycle(self.Stop)
+        else:
+            self.pwmMotorAForwards.ChangeDutyCycle(self.DutyCycleA * wheel2)
+            self.pwmMotorABackwards.ChangeDutyCycle(self.Stop)
+            self.pwmMotorBForwards.ChangeDutyCycle(self.DutyCycleB * wheel1)
+            self.pwmMotorBBackwards.ChangeDutyCycle(self.Stop)
+    
     def CleanUp(self):
         GPIO.cleanup()

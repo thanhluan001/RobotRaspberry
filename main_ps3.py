@@ -1,8 +1,8 @@
 from triangula.input import SixAxis, SixAxisResource
 import time # Import the Time library
 import os
-import camera
-from multiprocessing import Process
+#import camera
+#from multiprocessing import Process
 from motor import Motor
 
 #setting camera
@@ -28,6 +28,15 @@ with SixAxisResource(bind_defaults=True) as joystick:
     elif y == -1:
       motor.Backwards()
       print(x, y, 'BACKWARD')
+    elif x == -1:
+      motor.Left()
+      print(x, y, 'LEFT')
+    elif x == 1:
+      motor.Right()
+      print(x, y, 'RIGHT')
+    elif y < 1 and y > 0:
+      motor.ForwardRandom(x,y)
+      print(x, y)
     else: 
       motor.StopMotors()
       print(x, y, 'STOP')
